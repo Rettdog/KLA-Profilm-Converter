@@ -3,6 +3,10 @@ import math
 import scipy
 from scipy.interpolate import griddata
 
+#File Adaptations
+removeFromEnd = 7
+lineToStartOn = 27
+
 #Data
 waferDiameter = -1
 input = []
@@ -15,12 +19,12 @@ with open("TiWN batch reactor uniformity.fimap") as f:
 
 #Read data from file (diameter and points)
 currentLine = 0
-for line in contents[:len(contents)-7]:
+for line in contents[:len(contents)-removeFromEnd]:
     currentLine += 1
     if "Wafer Dia" in line:
         waferDiameter = int(line[line.find(',')+1:])
         print(f"Wafer Diameter: {line[line.find(',')+1:]}")
-    if currentLine >= 27:
+    if currentLine >= lineToStartOn:
         firstComma = line.find(',')
         secondComma = line[firstComma+1:].find(',')+firstComma+1
         thirdComma = line[secondComma+1:].find(',')+secondComma+1
